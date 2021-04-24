@@ -1,6 +1,7 @@
 import re
 
 import scrapy
+from scrapy.linkextractors import LinkExtractor
 
 
 class NewsSpider(scrapy.Spider):
@@ -9,8 +10,9 @@ class NewsSpider(scrapy.Spider):
 
     def start_requests(self):
         urls = [
-            'https://www.moneycontrol.com/news/',
+            'https://www.moneycontrol.com/',
         ]
+
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
 
@@ -19,12 +21,12 @@ class NewsSpider(scrapy.Spider):
         page = re.sub(r"/+", "-", page)
         page = re.sub("^-", "", page)
         page = re.sub("-$", "", page)
-        filename = f'{page}.html'
+        filename = f'data/news/{page}.html'
         with open(filename, 'wb') as f:
             f.write(response.body)
         self.log(f'Saved file {filename}')
 
-        next_page = response.css('a::attr(href)').get()
-        if next_page is not None:
-            next_page = response.urljoin(next_page)
-            yield scrapy.Request(next_page, callback=self.parse)
+        next_page = LinkExtractor()
+        links = next_page.extract_links(response)
+        for link in links:
+            yield scrapy.Request(link.url, callback=self.parse)
