@@ -8,7 +8,6 @@ from scrapy.linkextractors import LinkExtractor
 
 class NewsSpider(scrapy.Spider):
     name = "crawl"
-    DATA_DIR = "data/news"
 
     def start_requests(self):
         urls = [
