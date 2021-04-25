@@ -28,7 +28,7 @@ CONCURRENT_REQUESTS = 128
 DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
-CONCURRENT_REQUESTS_PER_IP = 16
+#CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
@@ -62,9 +62,9 @@ COOKIES_ENABLED = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'miner.pipelines.MinerPipeline': 300,
-# }
+ITEM_PIPELINES = {
+    'miner.pipelines.HtmlToTextPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -89,5 +89,7 @@ COOKIES_ENABLED = False
 
 SCHEDULER_PRIORITY_QUEUE = 'scrapy.pqueues.DownloaderAwarePriorityQueue'
 REACTOR_THREADPOOL_MAXSIZE = 20
+LOG_ENABLED = True
+LOG_FILE = 'miner.log'
 LOG_LEVEL = 'INFO'
 RETRY_ENABLED = False
