@@ -9,7 +9,7 @@
       "type": "python",
       "request": "launch",
       "module": "scrapy",
-      "args": ["runspider", "miner\\miner\\spiders\\news-spider.py"]
+      "args": ["crawl", "miner"]
     }
   ]
 }
